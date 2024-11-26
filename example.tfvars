@@ -1,4 +1,4 @@
-ibmcloud_api_key                = ""
+# ibmcloud_api_key                = ""
 TF_VERSION                      = "1.0"
 prefix                          = "ez-multizone-roks"
 region                          = "eu-es"
