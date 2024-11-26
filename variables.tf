@@ -41,12 +41,12 @@ variable "region" {
 variable "resource_group" {
   description = "Name of existing resource group where all infrastructure will be provisioned"
   type        = string
-  default     = "asset-development"
+  # default     = "asset-development"
 
-  validation {
-    error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
-    condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.resource_group))
-  }
+  # validation {
+  #   error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
+  #   condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.resource_group))
+  # }
 }
 
 variable "tags" {
