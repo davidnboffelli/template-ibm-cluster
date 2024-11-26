@@ -6,6 +6,10 @@ data "ibm_resource_group" "resource_group" {
   name = var.resource_group
 }
 
+variable rg_id {
+  type = string
+  default = "4364ced224cf420fa07d8bf70a8d70df"
+}
 ##############################################################################
 
 
@@ -15,7 +19,7 @@ data "ibm_resource_group" "resource_group" {
 
 module "vpc" {
   source                      = "./vpc"
-  resource_group_id           = data.ibm_resource_group.resource_group.id
+  resource_group_id           = var.rg_id
   region                      = var.region
   tags                        = var.tags
   prefix                      = local.env.prefix
@@ -43,14 +47,14 @@ data "ibm_resource_instance" "cos" {
   count             = var.create_new_cos_instance ? 0 : 1
   name              = var.object_storage_name
   location          = "global"
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = var.rg_id
   service           = "cloud-object-storage"
 }
 
 resource "ibm_resource_instance" "cos" {
   count             = var.create_new_cos_instance ? 1 : 0
   name              = var.object_storage_name
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = var.rg_id
   service           = "cloud-object-storage"
   location          = "global"
   plan              = var.object_storage_plan
@@ -88,7 +92,7 @@ locals {
 
 resource "ibm_container_vpc_cluster" "cluster" {
   vpc_id                          = module.vpc.vpc_id
-  resource_group_id               = data.ibm_resource_group.resource_group.id
+  resource_group_id               = var.rg_id
   tags                            = (var.tags != null ? var.tags : null)
   cos_instance_crn                = local.cos_id
   name                            = local.env.cluster.name
